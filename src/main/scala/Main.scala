@@ -38,6 +38,8 @@ object BSTree:
       }
   }
 
+  private def printTreeNode(value: Int, shift: Int): Unit = print(" " * shift + value + "\n")
+
   def makeBst(tree: List[Int]): BSTree[Int] = makeBst(sortList(tree), 0, tree.size - 1)
 
   def min(tree: BSTree[Int]): Int = getMinMax(tree, false)
@@ -86,3 +88,17 @@ object BSTree:
         }
       }
   }
+
+  def printBST(tree: BSTree[Int], shift: Int = 0): Unit =
+    tree match
+      case Leaf(a) => printTreeNode(a, shift)
+      case Branch(left, right, v) => {
+        if (right != Empty) printBST(right, shift + 10)
+        printTreeNode(v, shift)
+        if (left != Empty) printBST(left, shift + 10)
+      }
+
+@main def run() =
+  val list = List(5, 8, -1, 6, -10, 0, -2)
+  val bst = BSTree.makeBst(list)
+  BSTree.printBST(bst)
